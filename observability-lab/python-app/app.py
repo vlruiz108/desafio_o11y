@@ -10,6 +10,7 @@ error_count = Counter('app_errors_total', 'Total number of errors')
 # Métrica para medir o tempo de execução de uma função
 function_duration = Histogram('app_function_duration_seconds', 'Time spent in function execution', ['function_name'])
 
+
 # Rota para página inicial com mensagem de boas-vindas
 @app.route('/')
 def welcome():
@@ -41,7 +42,7 @@ def welcome():
             text-decoration: underline;
             margin: 0 10px;
         }
-        
+
     </style>
 </head>
 
@@ -60,6 +61,7 @@ def welcome():
     """
     return welcome_message
 
+
 # Rota para gerar erros intencionalmente
 @app.route('/generate-error')
 def generate_error():
@@ -71,6 +73,7 @@ def generate_error():
         error_count.inc()
         return f"Erro gerado: {str(e)}", 500
 
+
 # Rota para medir o tempo de execução
 @app.route('/calculate-duration')
 def calculate_duration():
@@ -80,16 +83,19 @@ def calculate_duration():
     function_duration.labels(function_name='calculate_duration').observe(time.time() - start_time)
     return "Tempo de execução medido com sucesso"
 
+
 # Rota para expor métricas do Prometheus com quebras de linha
 @app.route('/metrics')
 def metrics():
     metrics_data = generate_latest(REGISTRY)
     return Response(metrics_data, content_type='text/plain; version=0.0.4')
 
+
 # Rota para mostrar métricas no formato prometheus
 @app.route('/metrics-text')
 def metrics_text():
     return MetricsHandler(REGISTRY).do_GET(request)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3001)
