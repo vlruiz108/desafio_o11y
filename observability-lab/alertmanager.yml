@@ -1,9 +1,22 @@
 global:
   resolve_timeout: 5m
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'vlruiz108@gmail.com'
+  smtp_auth_username: 'vlruiz108@gmail.com'
+  smtp_auth_password: 'jtgz xgde fyyg hbrw'
+
 route:
-  receiver: webhook_receiver
-receivers:
-    - name: webhook_receiver
-      webhook_configs:
-        - url: 'https://webhook.site/62e5b561-f020-45cb-9d27-d1abeae67be9'
-          send_resolved: false
+  receiver: 'gmail'
+  repeat_interval: 1h
+
+  
+receivers:    
+- name: 'gmail'
+  email_configs:
+  - to: 'vlruiz108@gmail.com'
+    from: 'vlruiz108@gmail.com'
+    smarthost: smtp.gmail.com:587
+    auth_username: 'vlruiz108@gmail.com'
+    auth_identity: 'vlruiz108@gmail.com'
+    auth_password: 'jtgz xgde fyyg hbrw'
+    send_resolved: true
