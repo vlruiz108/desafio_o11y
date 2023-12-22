@@ -50,13 +50,11 @@ services:
     - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
       - '9090:9090'
-    network_mode: "host"
 
   grafana:
     image: grafana/grafana
     ports:
     - '3000:3000'
-    network_mode: "host"
 ```
 
 1.4. Crie um diretório chamado **prometheus** e, dentro dele, crie um arquivo **prometheus.yml** para configurar o Prometheus:
